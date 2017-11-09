@@ -35,7 +35,7 @@ def custom_score(game, player):
         The heuristic value of the current game state to the specified player.
     """
     # TODO: finish this function!
-    raise NotImplementedError
+    return len(game.get_legal_moves(player)) - 3 * len(game.get_legal_moves(game.get_opponent(player)))
 
 
 def custom_score_2(game, player):
@@ -60,8 +60,9 @@ def custom_score_2(game, player):
     float
         The heuristic value of the current game state to the specified player.
     """
-    # TODO: finish this function!
-    raise NotImplementedError
+    # #of my moves - # of opponent's moves
+
+    return len(game.get_legal_moves(player)) - len(game.get_legal_moves(game.get_opponent(player)))
 
 
 def custom_score_3(game, player):
@@ -87,7 +88,7 @@ def custom_score_3(game, player):
         The heuristic value of the current game state to the specified player.
     """
     # TODO: finish this function!
-    raise NotImplementedError
+    return 3 * len(game.get_legal_moves(player)) - len(game.get_legal_moves(game.get_opponent(player)))
 
 
 class IsolationPlayer:
@@ -243,7 +244,7 @@ class MinimaxPlayer(IsolationPlayer):
             raise SearchTimeout()
 
         if self._terminal_test(game, depth - 1):
-            return self.score(game)  # by Assumption 2
+            return self.score(game, game.active_player)  # by Assumption 2
         v = float("inf")
         for m in game.get_legal_moves():
             v = min(v, self._max_value(game.forecast_move(m), depth - 1))
@@ -258,7 +259,7 @@ class MinimaxPlayer(IsolationPlayer):
             raise SearchTimeout()
 
         if self._terminal_test(game, depth - 1):
-            return self.score(game)  # by assumption 2
+            return self.score(game, game.active_player)  # by assumption 2
         v = float("-inf")
         for m in game.get_legal_moves():
             v = max(v, self._min_value(game.forecast_move(m), depth - 1))
@@ -398,7 +399,7 @@ class AlphaBetaPlayer(IsolationPlayer):
             raise SearchTimeout()
 
         if self._terminal_test(game, depth - 1):
-            return self.score(game)  # by Assumption 2
+            return self.score(game, game.active_player)  # by Assumption 2
         v = float("inf")
         for m in game.get_legal_moves():
             v = min(v, self._max_value(game.forecast_move(m), depth - 1, alpha, beta))
@@ -419,7 +420,7 @@ class AlphaBetaPlayer(IsolationPlayer):
             raise SearchTimeout()
 
         if self._terminal_test(game, depth - 1):
-            return self.score(game)  # by assumption 2
+            return self.score(game, game.active_player)  # by assumption 2
         v = float("-inf")
         for m in game.get_legal_moves():
             v = max(v, self._min_value(game.forecast_move(m), depth - 1, alpha, beta))
