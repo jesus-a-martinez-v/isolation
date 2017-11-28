@@ -4,11 +4,10 @@ cases used by the project assistant are not public.
 """
 
 import unittest
-
-import isolation
-import game_agent
-
 from importlib import reload
+
+import game_agent
+import isolation
 
 
 class IsolationTest(unittest.TestCase):

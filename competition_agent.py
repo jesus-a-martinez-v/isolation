@@ -4,7 +4,6 @@ champions) in a tournament.
 
          COMPLETING AND SUBMITTING A COMPETITION AGENT IS OPTIONAL
 """
-import random
 
 
 class SearchTimeout(Exception):
