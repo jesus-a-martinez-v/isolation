@@ -130,10 +130,10 @@ def center_score(game, player):
 
     w, h = game.width / 2., game.height / 2.
     y, x = game.get_player_location(player)
-    return float((h - y)**2 + (w - x)**2)
+    return float((h - y) ** 2 + (w - x) ** 2)
 
 
-class RandomPlayer():
+class RandomPlayer:
     """Player that chooses a move randomly."""
 
     def get_move(self, game, time_left):
@@ -158,11 +158,11 @@ class RandomPlayer():
         """
         legal_moves = game.get_legal_moves()
         if not legal_moves:
-            return (-1, -1)
+            return -1, -1
         return legal_moves[randint(0, len(legal_moves) - 1)]
 
 
-class GreedyPlayer():
+class GreedyPlayer:
     """Player that chooses next move to maximize heuristic score. This is
     equivalent to a minimax search agent with a search depth of one.
     """
@@ -194,12 +194,12 @@ class GreedyPlayer():
         """
         legal_moves = game.get_legal_moves()
         if not legal_moves:
-            return (-1, -1)
+            return -1, -1
         _, move = max([(self.score(game.forecast_move(m), self), m) for m in legal_moves])
         return move
 
 
-class HumanPlayer():
+class HumanPlayer:
     """Player that chooses a move according to user's input."""
 
     def get_move(self, game, time_left):
@@ -232,12 +232,13 @@ class HumanPlayer():
         """
         legal_moves = game.get_legal_moves()
         if not legal_moves:
-            return (-1, -1)
+            return -1, -1
 
-        print(game.to_string()) #display the board for the human player
+        print(game.to_string())  # display the board for the human player
         print(('\t'.join(['[%d] %s' % (i, str(move)) for i, move in enumerate(legal_moves)])))
 
         valid_choice = False
+        index = None
         while not valid_choice:
             try:
                 index = int(input('Select move index:'))
@@ -268,7 +269,7 @@ if __name__ == "__main__":
     print(game.to_string())
 
     # players take turns moving on the board, so player1 should be next to move
-    assert(player1 == game.active_player)
+    assert (player1 == game.active_player)
 
     # get a list of the legal moves available to the active player
     print(game.get_legal_moves())
@@ -277,7 +278,7 @@ if __name__ == "__main__":
     # applying a move. Notice that this does NOT change the calling object
     # (unlike .apply_move()).
     new_game = game.forecast_move((1, 1))
-    assert(new_game.to_string() != game.to_string())
+    assert (new_game.to_string() != game.to_string())
     print("\nOld state:\n{}".format(game.to_string()))
     print("\nNew state:\n{}".format(new_game.to_string()))
 

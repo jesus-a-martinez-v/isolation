@@ -169,7 +169,7 @@ class Board(object):
                 "Invalid player in get_player_location: {}".format(player))
         w = idx // self.height
         h = idx % self.height
-        return (h, w)
+        return h, w
 
     def get_legal_moves(self, player=None):
         """Return the list of all legal moves for the specified player.
@@ -266,11 +266,13 @@ class Board(object):
         """DEPRECATED - use Board.to_string()"""
         return self.to_string()
 
-    def to_string(self, symbols=['1', '2']):
+    def to_string(self, symbols=None):
         """Generate a string representation of the current game state, marking
         the location of each player and indicating which cells have been
         blocked, and which remain open.
         """
+        if symbols is None:
+            symbols = ['1', '2']
         p1_loc = self._board_state[-1]
         p2_loc = self._board_state[-2]
 
